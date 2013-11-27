@@ -27,6 +27,7 @@
 #include <tf/transform_broadcaster.h>
 #include <stdr_msgs/RobotMsg.h>
 #include <stdr_msgs/MoveRobot.h>
+#include <stdr_robot/stdr_robot_tools.h>
 #include <stdr_robot/sensors/sensor_base.h>
 #include <stdr_robot/motion/motion_controller_base.h>
 #include <stdr_robot/motion/ideal_motion_controller.h>
@@ -74,6 +75,8 @@ class Robot : public nodelet::Nodelet {
 		stdr_msgs::RobotMsg _robotDescription;
 		
 		RegisterRobotClientPtr _registerClientPtr;
+		
+		bool _startTimer;
 };	
 	
 }
