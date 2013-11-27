@@ -60,6 +60,8 @@ void Robot::initializeRobot(const actionlib::SimpleClientGoalState& state, const
 	_currentPosePtr->y = result->description.initialPose.y;
 	_currentPosePtr->theta = result->description.initialPose.theta;
 	
+	_robotDescription = result->description;
+	
 	ros::NodeHandle n = getMTNodeHandle();
 	_motionControllerPtr.reset( new IdealMotionController(_currentPosePtr, _tfBroadcaster, n, getName()) );
 

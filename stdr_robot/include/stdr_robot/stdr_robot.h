@@ -71,6 +71,8 @@ class Robot : public nodelet::Nodelet {
 		geometry_msgs::Pose2DPtr _currentPosePtr;
 		MotionControllerPtr _motionControllerPtr;
 		
+		stdr_msgs::RobotMsg _robotDescription;
+		
 		RegisterRobotClientPtr _registerClientPtr;
 };	
 	
