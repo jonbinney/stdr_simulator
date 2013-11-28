@@ -103,6 +103,22 @@ void Robot::checkCollision(const ros::TimerEvent&) {
 		
 		for (float angleIter = 0.0; angleIter < STDR_PI * 2; angleIter += radStep){
 			
+			xMapPixel = ( _futurePosePredictionPtr->x + _robotDescription.footprint.radius * cos( angleIter ) ) / _map.info.resolution;
+			yMapPixel = ( _futurePosePredictionPtr->y + _robotDescription.footprint.radius * sin( angleIter ) ) / _map.info.resolution;
+			
+			if ( xMapPixel >= _map.info.width || yMapPixel >=  _map.info.height || xMapPixel < 0 || yMapPixel < 0){
+				ROS_DEBUG_NAMED("stdr_robot","[stdr_robot %s %d]: Footprint values outside map limits ", __FUNCTION__, __LINE__ );
+				_motionControllerPtr->stop();
+				break;
+			}
+			
+			if ( _map.data[ yMapPixel * _map.info.width + xMapPixel ] > 70 ){
+				
+				ROS_DEBUG_NAMED("stdr_robot","[stdr_robot %s  %d]: Collision Detected!!!", __FUNCTION__, __LINE__ );
+				_motionControllerPtr->stop();
+				break;
+			}
+			
 			xMapPixel = ( _currentPosePtr->x + _robotDescription.footprint.radius * cos( angleIter ) ) / _map.info.resolution;
 			yMapPixel = ( _currentPosePtr->y + _robotDescription.footprint.radius * sin( angleIter ) ) / _map.info.resolution;
 			

@@ -54,6 +54,7 @@ class MotionController {
 		const geometry_msgs::Pose2DPtr& _posePtr;
 		const geometry_msgs::Pose2DPtr& _futurePosePtr;
 		geometry_msgs::Twist _currentTwist;
+		geometry_msgs::Twist _previousTwist;
 };
 	
 typedef boost::shared_ptr<MotionController> MotionControllerPtr;
