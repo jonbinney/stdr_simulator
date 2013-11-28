@@ -41,8 +41,8 @@ class MotionController {
 	
 	protected:
 		
-		MotionController(const geometry_msgs::Pose2DPtr& pose, tf::TransformBroadcaster& tf, const std::string& name)
-		: _posePtr(pose), _tfBroadcaster(tf), _freq(0.1), _namespace(name) { }
+		MotionController(const geometry_msgs::Pose2DPtr& pose, const geometry_msgs::Pose2DPtr& futurePose, tf::TransformBroadcaster& tf, const std::string& name)
+		: _posePtr(pose), _futurePosePtr(futurePose), _tfBroadcaster(tf), _freq(0.1), _namespace(name) { }
 	
 	protected:
 		
@@ -52,6 +52,7 @@ class MotionController {
 		ros::Timer _calcTimer;
 		tf::TransformBroadcaster& _tfBroadcaster;
 		const geometry_msgs::Pose2DPtr& _posePtr;
+		const geometry_msgs::Pose2DPtr& _futurePosePtr;
 		geometry_msgs::Twist _currentTwist;
 };
 	

@@ -70,6 +70,7 @@ class Robot : public nodelet::Nodelet {
 		nav_msgs::OccupancyGrid _map;
 		tf::TransformBroadcaster _tfBroadcaster;
 		geometry_msgs::Pose2DPtr _currentPosePtr;
+		geometry_msgs::Pose2DPtr _futurePosePredictionPtr;
 		MotionControllerPtr _motionControllerPtr;
 		
 		stdr_msgs::RobotMsg _robotDescription;

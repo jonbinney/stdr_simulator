@@ -38,6 +38,7 @@ void Robot::onInit() {
 	_registerClientPtr->sendGoal(goal, boost::bind(&Robot::initializeRobot, this, _1, _2));	
 
 	_currentPosePtr.reset( new geometry_msgs::Pose2D ); 
+	_futurePosePredictionPtr.reset( new geometry_msgs::Pose2D ); 
 
 	_mapSubscriber = n.subscribe("map", 1, &Robot::mapCallback, this);
 	_moveRobotService = n.advertiseService(getName() + "/replace", &Robot::moveRobotCallback, this);
@@ -45,6 +46,7 @@ void Robot::onInit() {
 	_startTimer = true;
 	_tfTimer = n.createTimer(ros::Duration(0.1), &Robot::publishRobotTf, this);
 }
+
 
 void Robot::initializeRobot(const actionlib::SimpleClientGoalState& state, const stdr_msgs::RegisterRobotResultConstPtr result) {
 	
@@ -61,12 +63,17 @@ void Robot::initializeRobot(const actionlib::SimpleClientGoalState& state, const
 	_currentPosePtr->y = result->description.initialPose.y;
 	_currentPosePtr->theta = result->description.initialPose.theta;
 	
+	_futurePosePredictionPtr->x = result->description.initialPose.x;
+	_futurePosePredictionPtr->y = result->description.initialPose.y;
+	_futurePosePredictionPtr->theta = result->description.initialPose.theta;
+	
 	_robotDescription = result->description;
 	
 	ros::NodeHandle n = getMTNodeHandle();
-	_motionControllerPtr.reset( new IdealMotionController(_currentPosePtr, _tfBroadcaster, n, getName()) );
+	_motionControllerPtr.reset( new IdealMotionController(_currentPosePtr, _futurePosePredictionPtr, _tfBroadcaster, n, getName()) );
 
 }
+
 
 void Robot::mapCallback(const nav_msgs::OccupancyGridConstPtr& msg) {
 	ros::NodeHandle n = getMTNodeHandle();
