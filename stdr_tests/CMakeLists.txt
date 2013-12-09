@@ -13,6 +13,13 @@ find_package(catkin REQUIRED COMPONENTS
 	stdr_gui
 )
 
+find_package(Qt4 REQUIRED COMPONENTS 
+	QtCore 
+	QtGui 
+	QtUiTools
+)
+include(${QT_USE_FILE})
+
 include_directories( include
 	${catkin_INCLUDE_DIRS}
 )
@@ -22,6 +29,10 @@ include_directories(
 )
 
 catkin_package(
+	DEPENDS   
+		QtCore 
+		QtGui 
+		QtUiTools
     CATKIN_DEPENDS # TODO
 		roscpp
 		roslib
@@ -42,9 +53,11 @@ set(CMAKE_BUILD_TYPE Debug)
 
 add_executable(stdr_gui_range
 	src/test.cpp
+	${QT_SOURCES} ${QT_FORMS_HPP}
 )
-add_dependencies(stdr_gui_range stdr_msgs_gencpp stdr_robot_gencpp stdr_server_gencpp stdr_gui_gencpp)	# Wait for std messages to build
+add_dependencies(stdr_gui_range stdr_msgs_gencpp stdr_gui)	# Wait for std messages to build
 
 target_link_libraries(stdr_gui_range 
 	${catkin_LIBRARIES} gtest gmock
+	${QT_LIBRARIES}
 )

@@ -43,6 +43,7 @@ catkin_package(
 		sensor_msgs
 		nav_msgs
     INCLUDE_DIRS # TODO include
+		include
     LIBRARIES # TODO
     
 )
