@@ -25,6 +25,9 @@
   <run_depend>stdr_robot</run_depend>
   <run_depend>sensor_msgs</run_depend>
   <run_depend>nav_msgs</run_depend>
+  
+  <test_depend>gtest</test_depend>
+  <test_depend>gmock</test_depend>
 
   <export>
   </export>
