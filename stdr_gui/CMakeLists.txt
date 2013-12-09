@@ -95,3 +95,6 @@ target_link_libraries(stdr_gui_node
 	${catkin_LIBRARIES} 
 	${QT_LIBRARIES}
 )
+
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/GuiTests.cmake)
